@@ -1,35 +1,33 @@
-# Weather ETL Pipeline
+# Real-Time Weather ETL Pipeline & Analytics Dashboard (V2)
 
-Pipeline de datos automatizado que extrae información meteorológica
-de 5 ciudades españolas en tiempo real, la transforma y la almacena
-en una base de datos SQL.
+A comprehensive data engineering project that automates the lifecycle of meteorological data from ingestion to interactive visualization. This system monitors real-time weather conditions across major Spanish cities, leveraging a modular ETL architecture.
 
-## Stack tecnológico
-- **Python 3.11** — Lenguaje principal
-- **Pandas** — Transformación de datos
-- **SQLAlchemy** — Conexión a base de datos
-- **SQLite** — Almacenamiento
-- **OpenWeatherMap API** — Fuente de datos
+## Project Evolution
+What began as a backend ETL script has evolved into a full-scale **Data Application**. The current version features:
+* **Geospatial Analytics:** Interactive maps for regional trend monitoring.
+* **Visual Context:** Real-time weather iconography integration.
+* **Relational Persistence:** Robust SQL storage for historical time-series analysis.
 
-## Arquitectura
+## Technical Stack
+* **Language:** Python 3.11
+* **Data Orchestration:** Pandas (Transformation & Cleaning)
+* **Database Layer:** SQLAlchemy (ORM) & SQLite
+* **Visualization:** Streamlit & Plotly (Real-time Dashboard)
+* **API Ingestion:** OpenWeatherMap API
 
-API (OpenWeatherMap) → extract.py → transform.py → load.py → SQLite DB
+## System Architecture
+The pipeline follows a modular ETL (Extract, Transform, Load) design:
+`API (Source) ➔ extract.py ➔ transform.py ➔ load.py ➔ SQLite (Storage) ➔ Streamlit (Data Product)`
 
-## Cómo ejecutarlo
+---
 
-# 1. Clona el repositorio
-git clone https://github.com/tuusuario/weather-etl-pipeline
+## Installation & Execution
 
-# 2. Instala dependencias
+Follow these steps to deploy the environment and run the application locally.
+
+### 1. Environment Setup
+Clone the repository and install the required dependencies:
+```bash
+git clone [https://github.com/abderrahimhtml/weather-etl-pipeline](https://github.com/abderrahimhtml/weather-etl-pipeline)
+cd weather-etl-pipeline
 pip install -r requirements.txt
-
-# 3. Crea tu archivo .env con tu API key
-echo "API_KEY=tu_clave" > .env
-
-# 4. Ejecuta el pipeline
-python main.py
-
-## Próximas mejoras
-- [ ] Añadir Airflow para automatizar la ejecución
-- [ ] Dashboard con Streamlit
-- [ ] Deploy en Docker
