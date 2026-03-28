@@ -1,6 +1,6 @@
 # Weather ETL Pipeline & Analytics Dashboard
 
-Automated data engineering system that extracts real-time meteorological data from 5 Spanish cities, transforms and stores it in a local database, and exposes it through an interactive dashboard. The pipeline runs automatically every hour via a built-in scheduler.
+Sistema de ingeniería de datos que extrae información meteorológica en tiempo real de 5 ciudades españolas, la transforma, almacena en una base de datos local y en un Data Warehouse, y la visualiza en un dashboard interactivo. El pipeline se ejecuta automáticamente cada hora.
 
 ## Architecture
 ```
@@ -14,16 +14,19 @@ OpenWeatherMap API
         ↓
   scheduler.py       ← APScheduler (hourly automation)
         ↓
+  warehouse.py       ← DuckDB Data Warehouse + analytics views
+        ↓
   dashboard.py       ← Streamlit + Plotly (visualization)
 ```
 
 ## Features
 
-- Extracts live weather data for Madrid, Barcelona, Sevilla, Valencia and Bilbao
-- Cleans and structures data with Pandas
-- Persists records in SQLite with append mode (full historical log)
-- Runs automatically every hour with execution logs
-- Interactive dashboard with KPIs, charts, radar comparison and data table
+- Extrae datos meteorológicos en tiempo real para Madrid, Barcelona, Sevilla, Valencia y Bilbao
+- Limpia y estructura los datos con Pandas
+- Persiste registros en SQLite con modo append (historial completo)
+- Se ejecuta automáticamente cada hora con logs de ejecución
+- Data Warehouse local con DuckDB con vistas analíticas
+- Dashboard interactivo con KPIs, gráficos, radar comparativo y tabla de datos
 
 ## Tech Stack
 
@@ -33,6 +36,7 @@ OpenWeatherMap API
 | Extraction | OpenWeatherMap API + Requests |
 | Transformation | Pandas |
 | Storage | SQLite + SQLAlchemy |
+| Data Warehouse | DuckDB |
 | Automation | APScheduler |
 | Visualization | Streamlit + Plotly |
 
@@ -40,18 +44,20 @@ OpenWeatherMap API
 ```
 weather-etl-pipeline/
 ├── src/
-│   ├── extract.py       # API calls
-│   ├── transform.py     # Data transformation
-│   └── load.py          # Database persistence
+│   ├── extract.py           # API calls
+│   ├── transform.py         # Data transformation
+│   └── load.py              # SQLite persistence
 ├── data/
-│   └── weather.db       # SQLite database
+│   ├── weather.db           # SQLite database
+│   └── weather_warehouse.duckdb  # DuckDB Data Warehouse
 ├── logs/
-│   └── pipeline.log     # Execution logs
+│   └── pipeline.log         # Execution logs
 ├── tests/
 │   └── test_pipeline.py
-├── scheduler.py         # Hourly automation
-├── dashboard.py         # Streamlit dashboard
-├── .env                 # API key (not included)
+├── scheduler.py             # Hourly automation
+├── warehouse.py             # DuckDB Data Warehouse
+├── dashboard.py             # Streamlit dashboard
+├── .env                     # API key (not included)
 ├── requirements.txt
 └── README.md
 ```
@@ -60,7 +66,7 @@ weather-etl-pipeline/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/abderrahimhtml
+git clone https://github.com/abderrahimhtml/weather-etl-pipeline
 cd weather-etl-pipeline
 ```
 
@@ -78,12 +84,12 @@ pip install -r requirements.txt
 
 ### 4. Configure API key
 
-Create a `.env` file in the root directory:
+Crea un archivo `.env` en la raíz:
 ```
 API_KEY=your_openweathermap_api_key
 ```
 
-Get your free key at [openweathermap.org](https://openweathermap.org/api).
+Obtén tu clave gratuita en [openweathermap.org](https://openweathermap.org/api).
 
 ## Usage
 
@@ -97,7 +103,10 @@ python main.py
 python scheduler.py
 ```
 
-The scheduler runs the pipeline immediately on start, then every hour automatically. Logs are saved to `logs/pipeline.log`.
+### Run the Data Warehouse
+```bash
+python warehouse.py
+```
 
 ### Launch the dashboard
 ```bash
@@ -109,7 +118,9 @@ streamlit run dashboard.py
 - [x] Modular ETL pipeline (Python + SQLite)
 - [x] Interactive analytics dashboard (Streamlit + Plotly)
 - [x] Hourly automation (APScheduler)
-- [ ] Cloud Data Warehouse (dbt + AWS/GCP)
+- [x] Local Data Warehouse (DuckDB)
+- [ ] Expand to world capitals
+- [ ] Cloud deployment
 
 ## Author
 
