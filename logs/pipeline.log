@@ -54,3 +54,20 @@
 2026-03-28 12:37:46,251 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
 2026-03-28 12:37:46,253 [INFO] Added job "run_pipeline" to job store "default"
 2026-03-28 12:37:46,254 [INFO] Scheduler started
+2026-03-28 12:51:03,557 [INFO] Scheduler iniciado. El pipeline se ejecutará cada hora.
+2026-03-28 12:51:03,559 [INFO] === Iniciando pipeline ETL ===
+2026-03-28 12:51:05,936 [INFO] Procesando Madrid...
+2026-03-28 12:51:06,970 [INFO] Madrid guardada correctamente
+2026-03-28 12:51:06,971 [INFO] Procesando Barcelona...
+2026-03-28 12:51:07,727 [INFO] Barcelona guardada correctamente
+2026-03-28 12:51:07,728 [INFO] Procesando Sevilla...
+2026-03-28 12:51:08,541 [INFO] Sevilla guardada correctamente
+2026-03-28 12:51:08,541 [INFO] Procesando Valencia...
+2026-03-28 12:51:09,295 [INFO] Valencia guardada correctamente
+2026-03-28 12:51:09,296 [INFO] Procesando Bilbao...
+2026-03-28 12:51:10,039 [INFO] Bilbao guardada correctamente
+2026-03-28 12:51:10,039 [INFO] === Pipeline completado con éxito ===
+2026-03-28 12:51:10,051 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-28 12:51:10,055 [INFO] Added job "run_pipeline" to job store "default"
+2026-03-28 12:51:10,055 [INFO] Scheduler started
+2026-03-28 13:11:14,109 [INFO] Scheduler detenido.

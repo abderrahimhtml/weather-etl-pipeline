@@ -1,10 +1,10 @@
-# Weather ETL Pipeline & Analytics Dashboard
+# Global Weather ETL Pipeline & Analytics Dashboard
 
-Sistema de ingeniería de datos que extrae información meteorológica en tiempo real de 5 ciudades españolas, la transforma, almacena en una base de datos local y en un Data Warehouse, y la visualiza en un dashboard interactivo. El pipeline se ejecuta automáticamente cada hora.
+Automated data engineering system that extracts real-time meteorological data from the 50 most important cities in the world, transforms and stores it in a local database and a Data Warehouse, and exposes it through an interactive global dashboard. The pipeline runs automatically every hour.
 
 ## Architecture
 ```
-OpenWeatherMap API
+OpenWeatherMap API (50 world cities)
         ↓
    extract.py        ← HTTP requests, raw JSON
         ↓
@@ -16,17 +16,18 @@ OpenWeatherMap API
         ↓
   warehouse.py       ← DuckDB Data Warehouse + analytics views
         ↓
-  dashboard.py       ← Streamlit + Plotly (visualization)
+  dashboard.py       ← Streamlit + Plotly (global visualization)
 ```
 
 ## Features
 
-- Extrae datos meteorológicos en tiempo real para Madrid, Barcelona, Sevilla, Valencia y Bilbao
-- Limpia y estructura los datos con Pandas
-- Persiste registros en SQLite con modo append (historial completo)
-- Se ejecuta automáticamente cada hora con logs de ejecución
-- Data Warehouse local con DuckDB con vistas analíticas
-- Dashboard interactivo con KPIs, gráficos, radar comparativo y tabla de datos
+- Extracts live weather data for 50 major world cities across 6 continents
+- Cleans and structures data with Pandas
+- Persists all records in SQLite with append mode (full historical log)
+- Runs automatically every hour with execution logs
+- Local Data Warehouse with DuckDB including analytics views
+- Interactive global dashboard with KPIs, charts, world map and data table
+- Filters by city and date range
 
 ## Tech Stack
 
@@ -44,7 +45,7 @@ OpenWeatherMap API
 ```
 weather-etl-pipeline/
 ├── src/
-│   ├── extract.py           # API calls
+│   ├── extract.py           # API calls (50 cities)
 │   ├── transform.py         # Data transformation
 │   └── load.py              # SQLite persistence
 ├── data/
@@ -55,8 +56,9 @@ weather-etl-pipeline/
 ├── tests/
 │   └── test_pipeline.py
 ├── scheduler.py             # Hourly automation
-├── warehouse.py             # DuckDB Data Warehouse
-├── dashboard.py             # Streamlit dashboard
+├── warehouse.py             # DuckDB Data Warehouse + analytics views
+├── dashboard.py             # Streamlit global dashboard
+├── main.py                  # Manual pipeline execution
 ├── .env                     # API key (not included)
 ├── requirements.txt
 └── README.md
@@ -84,12 +86,12 @@ pip install -r requirements.txt
 
 ### 4. Configure API key
 
-Crea un archivo `.env` en la raíz:
+Create a `.env` file in the root directory:
 ```
 API_KEY=your_openweathermap_api_key
 ```
 
-Obtén tu clave gratuita en [openweathermap.org](https://openweathermap.org/api).
+Get your free key at [openweathermap.org](https://openweathermap.org/api).
 
 ## Usage
 
@@ -103,7 +105,9 @@ python main.py
 python scheduler.py
 ```
 
-### Run the Data Warehouse
+The scheduler runs the pipeline immediately on start, then every hour automatically. Logs are saved to `logs/pipeline.log`.
+
+### Update the Data Warehouse
 ```bash
 python warehouse.py
 ```
@@ -113,14 +117,32 @@ python warehouse.py
 streamlit run dashboard.py
 ```
 
+## Cities Covered
+
+**Europe:** Madrid, Barcelona, Sevilla, Valencia, Bilbao, London, Paris, Berlin, Rome
+
+**Asia:** Tokyo, Beijing, Shanghai, Mumbai, Delhi, Bangkok, Jakarta, Singapore, Kuala Lumpur, Manila, Seoul, Karachi, Dhaka, Colombo, Kathmandu, Islamabad, Kabul, Dubai, Riyadh, Tehran
+
+**North America:** New York, Los Angeles, Chicago, Toronto, Mexico City
+
+**South America:** São Paulo, Buenos Aires, Lima, Bogotá, Santiago
+
+**Africa:** Cairo, Lagos, Nairobi, Johannesburg, Casablanca
+
+**Oceania:** Sydney, Melbourne, Auckland
+
+**Europe/Asia:** Moscow, Istanbul
+
 ## Roadmap
 
 - [x] Modular ETL pipeline (Python + SQLite)
 - [x] Interactive analytics dashboard (Streamlit + Plotly)
 - [x] Hourly automation (APScheduler)
 - [x] Local Data Warehouse (DuckDB)
-- [ ] Expand to world capitals
+- [x] Global expansion — 50 world cities
+- [x] Interactive world map with temperature heatmap
 - [ ] Cloud deployment
+- [ ] Historical trend analysis
 
 ## Author
 
