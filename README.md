@@ -60,7 +60,7 @@ weather-etl-pipeline/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/abderrahimhtml/weather-etl-pipeline
+git clone https://github.com/abderrahimhtml
 cd weather-etl-pipeline
 ```
 
