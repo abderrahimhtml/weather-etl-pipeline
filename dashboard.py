@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 from sqlalchemy import create_engine
-
+import duckdb
 
 st.set_page_config(
     page_title="Panel Profesional de Clima en España",
@@ -41,14 +41,23 @@ CITY_COORDS = {
 }
 
 
+DUCKDB_PATH = Path("data/weather_warehouse.duckdb")
+
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
     if not DB_PATH.exists():
         return pd.DataFrame(columns=REQUIRED_COLUMNS)
-
     engine = create_engine(f"sqlite:///{DB_PATH.as_posix()}")
-    query = f"SELECT * FROM {TABLE_NAME}"
-    df = pd.read_sql(query, engine)
+    df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", engine)
+    return df
+
+@st.cache_data(show_spinner=False)
+def load_warehouse_summary() -> pd.DataFrame:
+    if not DUCKDB_PATH.exists():
+        return pd.DataFrame()
+    conn = duckdb.connect(str(DUCKDB_PATH))
+    df = conn.execute("SELECT * FROM avg_temperature").df()
+    conn.close()
     return df
 
 
@@ -234,7 +243,15 @@ def render_charts(df: pd.DataFrame) -> None:
         )
         fig_map.update_layout(margin=dict(l=10, r=10, t=20, b=10))
         st.plotly_chart(fig_map, use_container_width=True)
-
+def render_warehouse(df: pd.DataFrame) -> None:
+    if df.empty:
+        return
+    st.subheader("Data Warehouse — Resumen analítico (DuckDB)")
+    cols = st.columns(len(df))
+    for i, row in df.iterrows():
+        with cols[i]:
+            st.metric(row["ciudad"], f"{row['temp_media']} °C", f"Sensación {row['sensacion_media']} °C")
+    st.dataframe(df, use_container_width=True)
 
 def main() -> None:
     corporate_style()
@@ -261,6 +278,8 @@ def main() -> None:
     render_kpis(filtered)
     st.divider()
     render_charts(filtered)
+    warehouse_df = load_warehouse_summary()
+    render_warehouse(warehouse_df)
     st.divider()
 
     st.subheader("Detalle de datos")
