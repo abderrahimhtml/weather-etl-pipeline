@@ -3,7 +3,6 @@ import os
 import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-# Configurar logs
 os.makedirs("logs", exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
@@ -16,7 +15,6 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Añadir src al path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 CITIES = ["Madrid", "Barcelona", "Sevilla", "Valencia", "Bilbao"]
