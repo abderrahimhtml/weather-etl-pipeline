@@ -22,3 +22,35 @@
 2026-03-28 12:19:36,560 [INFO] Added job "run_pipeline" to job store "default"
 2026-03-28 12:19:36,561 [INFO] Scheduler started
 2026-03-28 12:20:15,922 [INFO] Scheduler detenido.
+2026-03-28 12:35:31,199 [INFO] Scheduler iniciado. El pipeline se ejecutará cada hora.
+2026-03-28 12:35:31,200 [INFO] === Iniciando pipeline ETL ===
+2026-03-28 12:35:33,342 [INFO] Procesando Madrid...
+2026-03-28 12:35:34,285 [INFO] Madrid guardada correctamente
+2026-03-28 12:35:34,286 [INFO] Procesando Barcelona...
+2026-03-28 12:35:35,057 [INFO] Barcelona guardada correctamente
+2026-03-28 12:35:35,058 [INFO] Procesando Sevilla...
+2026-03-28 12:35:35,827 [INFO] Sevilla guardada correctamente
+2026-03-28 12:35:35,828 [INFO] Procesando Valencia...
+2026-03-28 12:35:36,596 [INFO] Valencia guardada correctamente
+2026-03-28 12:35:36,597 [INFO] Procesando Bilbao...
+2026-03-28 12:35:37,360 [INFO] Bilbao guardada correctamente
+2026-03-28 12:35:37,361 [INFO] === Pipeline completado con éxito ===
+2026-03-28 12:35:37,375 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-28 12:35:37,378 [INFO] Added job "run_pipeline" to job store "default"
+2026-03-28 12:35:37,380 [INFO] Scheduler started
+2026-03-28 12:37:40,739 [INFO] Scheduler iniciado. El pipeline se ejecutará cada hora.
+2026-03-28 12:37:40,740 [INFO] === Iniciando pipeline ETL ===
+2026-03-28 12:37:42,559 [INFO] Procesando Madrid...
+2026-03-28 12:37:43,350 [INFO] Madrid guardada correctamente
+2026-03-28 12:37:43,350 [INFO] Procesando Barcelona...
+2026-03-28 12:37:44,122 [INFO] Barcelona guardada correctamente
+2026-03-28 12:37:44,123 [INFO] Procesando Sevilla...
+2026-03-28 12:37:44,859 [INFO] Sevilla guardada correctamente
+2026-03-28 12:37:44,859 [INFO] Procesando Valencia...
+2026-03-28 12:37:45,541 [INFO] Valencia guardada correctamente
+2026-03-28 12:37:45,541 [INFO] Procesando Bilbao...
+2026-03-28 12:37:46,243 [INFO] Bilbao guardada correctamente
+2026-03-28 12:37:46,244 [INFO] === Pipeline completado con éxito ===
+2026-03-28 12:37:46,251 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-28 12:37:46,253 [INFO] Added job "run_pipeline" to job store "default"
+2026-03-28 12:37:46,254 [INFO] Scheduler started
