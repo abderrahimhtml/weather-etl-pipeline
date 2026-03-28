@@ -1,0 +1,24 @@
+2026-03-28 12:17:36,821 [INFO] Scheduler iniciado. El pipeline se ejecutará cada hora.
+2026-03-28 12:17:36,822 [INFO] === Iniciando pipeline ETL ===
+2026-03-28 12:17:37,268 [ERROR] Error en el pipeline: cannot import name 'extract_data' from 'extract' (C:\Users\abderrahim\Desktop\weather-etl-pipeline\src\extract.py)
+2026-03-28 12:17:37,279 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-28 12:17:37,282 [INFO] Added job "run_pipeline" to job store "default"
+2026-03-28 12:17:37,282 [INFO] Scheduler started
+2026-03-28 12:19:25,723 [INFO] Scheduler detenido.
+2026-03-28 12:19:27,702 [INFO] Scheduler iniciado. El pipeline se ejecutará cada hora.
+2026-03-28 12:19:27,703 [INFO] === Iniciando pipeline ETL ===
+2026-03-28 12:19:32,214 [INFO] Procesando Madrid...
+2026-03-28 12:19:33,400 [INFO] Madrid guardada correctamente
+2026-03-28 12:19:33,400 [INFO] Procesando Barcelona...
+2026-03-28 12:19:34,183 [INFO] Barcelona guardada correctamente
+2026-03-28 12:19:34,183 [INFO] Procesando Sevilla...
+2026-03-28 12:19:34,983 [INFO] Sevilla guardada correctamente
+2026-03-28 12:19:34,984 [INFO] Procesando Valencia...
+2026-03-28 12:19:35,710 [INFO] Valencia guardada correctamente
+2026-03-28 12:19:35,711 [INFO] Procesando Bilbao...
+2026-03-28 12:19:36,548 [INFO] Bilbao guardada correctamente
+2026-03-28 12:19:36,548 [INFO] === Pipeline completado con éxito ===
+2026-03-28 12:19:36,558 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-28 12:19:36,560 [INFO] Added job "run_pipeline" to job store "default"
+2026-03-28 12:19:36,561 [INFO] Scheduler started
+2026-03-28 12:20:15,922 [INFO] Scheduler detenido.
