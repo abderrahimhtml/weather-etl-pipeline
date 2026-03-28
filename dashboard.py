@@ -27,7 +27,6 @@ REQUIRED_COLUMNS = [
     "fecha_extraccion",
 ]
 
-# Coordenadas aproximadas para mapa (en caso de ciudades principales)
 CITY_COORDS = {
     "Madrid": (40.4168, -3.7038),
     "Barcelona": (41.3874, 2.1686),
