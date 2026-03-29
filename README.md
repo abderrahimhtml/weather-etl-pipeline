@@ -1,6 +1,6 @@
-# Global Weather ETL Pipeline & Analytics Dashboard
+# 🌍 Global Weather ETL Pipeline & Analytics Dashboard
 
-Automated data engineering system that extracts real-time meteorological data from the 50 most important cities in the world, transforms and stores it in a local database and a Data Warehouse, and exposes it through an interactive global dashboard. The pipeline runs automatically every hour.
+Automated data engineering system that extracts real-time meteorological data from the 50 most important cities in the world, transforms and stores it in a local database and a Data Warehouse, exposes it through a REST API, and visualizes it in an interactive global dashboard. The pipeline runs automatically every hour with email alerts for extreme conditions.
 
 ## Architecture
 ```
@@ -12,9 +12,11 @@ OpenWeatherMap API (50 world cities)
         ↓
     load.py          ← SQLAlchemy → SQLite
         ↓
-  scheduler.py       ← APScheduler (hourly automation)
+  scheduler.py       ← APScheduler (hourly automation + alerts)
         ↓
   warehouse.py       ← DuckDB Data Warehouse + analytics views
+        ↓
+   api.py            ← FastAPI REST API
         ↓
   dashboard.py       ← Streamlit + Plotly (global visualization)
 ```
@@ -26,8 +28,10 @@ OpenWeatherMap API (50 world cities)
 - Persists all records in SQLite with append mode (full historical log)
 - Runs automatically every hour with execution logs
 - Local Data Warehouse with DuckDB including analytics views
+- REST API with FastAPI — 8 endpoints with auto-generated docs
+- Email alerts via Gmail when extreme temperatures or humidity detected
 - Interactive global dashboard with KPIs, charts, world map and data table
-- Filters by city and date range
+- 11 automated tests with pytest
 
 ## Tech Stack
 
@@ -39,7 +43,10 @@ OpenWeatherMap API (50 world cities)
 | Storage | SQLite + SQLAlchemy |
 | Data Warehouse | DuckDB |
 | Automation | APScheduler |
+| API | FastAPI + Uvicorn |
+| Alerts | Gmail SMTP |
 | Visualization | Streamlit + Plotly |
+| Testing | Pytest |
 
 ## Project Structure
 ```
@@ -54,12 +61,14 @@ weather-etl-pipeline/
 ├── logs/
 │   └── pipeline.log         # Execution logs
 ├── tests/
-│   └── test_pipeline.py
-├── scheduler.py             # Hourly automation
-├── warehouse.py             # DuckDB Data Warehouse + analytics views
+│   └── test_pipeline.py     # 11 automated tests
+├── scheduler.py             # Hourly automation + alerts
+├── warehouse.py             # DuckDB Data Warehouse
+├── api.py                   # FastAPI REST API
+├── alerts.py                # Email alerts (Gmail)
 ├── dashboard.py             # Streamlit global dashboard
 ├── main.py                  # Manual pipeline execution
-├── .env                     # API key (not included)
+├── .env                     # Credentials (not included)
 ├── requirements.txt
 └── README.md
 ```
@@ -84,14 +93,15 @@ source venv/bin/activate       # Linux / macOS
 pip install -r requirements.txt
 ```
 
-### 4. Configure API key
+### 4. Configure credentials
 
 Create a `.env` file in the root directory:
 ```
 API_KEY=your_openweathermap_api_key
+EMAIL_USER=your_gmail@gmail.com
+EMAIL_PASSWORD=your_16_char_app_password
+EMAIL_TO=your_gmail@gmail.com
 ```
-
-Get your free key at [openweathermap.org](https://openweathermap.org/api).
 
 ## Usage
 
@@ -105,21 +115,43 @@ python main.py
 python scheduler.py
 ```
 
-The scheduler runs the pipeline immediately on start, then every hour automatically. Logs are saved to `logs/pipeline.log`.
-
 ### Update the Data Warehouse
 ```bash
 python warehouse.py
 ```
+
+### Launch the REST API
+```bash
+uvicorn api:app --reload
+```
+API docs available at `http://127.0.0.1:8000/docs`
 
 ### Launch the dashboard
 ```bash
 streamlit run dashboard.py
 ```
 
+### Run tests
+```bash
+pytest tests/test_pipeline.py -v
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | API info |
+| GET | `/cities` | List all cities |
+| GET | `/weather` | Latest data for all cities |
+| GET | `/weather/{city}` | Latest data for one city |
+| GET | `/analytics/summary` | Average metrics per city |
+| GET | `/analytics/hottest` | Top N hottest cities |
+| GET | `/analytics/coldest` | Top N coldest cities |
+| GET | `/analytics/most-humid` | Top N most humid cities |
+
 ## Cities Covered
 
-**Europe:** Madrid, Barcelona, Sevilla, Valencia, Bilbao, London, Paris, Berlin, Rome
+**Europe:** Madrid, Barcelona, Sevilla, Valencia, Bilbao, London, Paris, Berlin, Rome, Moscow, Istanbul
 
 **Asia:** Tokyo, Beijing, Shanghai, Mumbai, Delhi, Bangkok, Jakarta, Singapore, Kuala Lumpur, Manila, Seoul, Karachi, Dhaka, Colombo, Kathmandu, Islamabad, Kabul, Dubai, Riyadh, Tehran
 
@@ -131,8 +163,6 @@ streamlit run dashboard.py
 
 **Oceania:** Sydney, Melbourne, Auckland
 
-**Europe/Asia:** Moscow, Istanbul
-
 ## Roadmap
 
 - [x] Modular ETL pipeline (Python + SQLite)
@@ -141,8 +171,10 @@ streamlit run dashboard.py
 - [x] Local Data Warehouse (DuckDB)
 - [x] Global expansion — 50 world cities
 - [x] Interactive world map with temperature heatmap
+- [x] REST API with FastAPI
+- [x] Email alerts for extreme conditions
+- [x] Automated tests with pytest (11/11)
 - [ ] Cloud deployment
-- [ ] Historical trend analysis
 
 ## Author
 
