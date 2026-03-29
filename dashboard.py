@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import unicodedata
 
+import requests
 import duckdb
 import pandas as pd
 import plotly.express as px
@@ -77,23 +78,38 @@ CITY_COORDS = {
 }
 
 
-@st.cache_data(show_spinner=False)
+API_URL = "http://127.0.0.1:8000"
+
+@st.cache_data(show_spinner=False, ttl=300)
 def load_data() -> pd.DataFrame:
-    if not DB_PATH.exists():
-        return pd.DataFrame(columns=REQUIRED_COLUMNS)
-    engine = create_engine(f"sqlite:///{DB_PATH.as_posix()}")
-    df = pd.read_sql(f"SELECT * FROM {TABLE_NAME}", engine)
-    return df
+    try:
+        response = requests.get(f"{API_URL}/weather", timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        if not data:
+            return pd.DataFrame(columns=REQUIRED_COLUMNS)
+        return pd.DataFrame(data)
+    except Exception:
+        # Fallback a SQLite si la API no está disponible
+        if not DB_PATH.exists():
+            return pd.DataFrame(columns=REQUIRED_COLUMNS)
+        engine = create_engine(f"sqlite:///{DB_PATH.as_posix()}")
+        return pd.read_sql(f"SELECT * FROM {TABLE_NAME}", engine)
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl=300)
 def load_warehouse_summary() -> pd.DataFrame:
-    if not DUCKDB_PATH.exists():
-        return pd.DataFrame()
-    conn = duckdb.connect(str(DUCKDB_PATH))
-    df = conn.execute("SELECT * FROM avg_temperature").df()
-    conn.close()
-    return df
+    try:
+        response = requests.get(f"{API_URL}/analytics/summary", timeout=5)
+        response.raise_for_status()
+        return pd.DataFrame(response.json())
+    except Exception:
+        if not DUCKDB_PATH.exists():
+            return pd.DataFrame()
+        conn = duckdb.connect(str(DUCKDB_PATH))
+        df = conn.execute("SELECT * FROM avg_temperature").df()
+        conn.close()
+        return df
 
 
 def prepare_data(df: pd.DataFrame) -> pd.DataFrame:

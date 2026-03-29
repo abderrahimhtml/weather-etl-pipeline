@@ -16,6 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
+sys.path.insert(0, os.path.dirname(__file__))
 
 CITIES = ["Madrid", "Barcelona", "Sevilla", "Valencia", "Bilbao"]
 
@@ -34,6 +35,15 @@ def run_pipeline():
             logger.info(f"{city} guardada correctamente")
 
         logger.info("=== Pipeline completado con éxito ===")
+
+        from alerts import check_alerts, send_email
+        alerts = check_alerts()
+        if alerts:
+            send_email(alerts)
+            logger.info(f"Alertas enviadas: {len(alerts)}")
+        else:
+            logger.info("Sin alertas activas.")
+
     except Exception as e:
         logger.error(f"Error en el pipeline: {e}")
 
