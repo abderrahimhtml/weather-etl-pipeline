@@ -12,22 +12,6 @@ Automated data engineering system that extracts real-time meteorological data fr
 
 ---
 
-## Screenshots
-
-### Interactive Global Dashboard
-![Dashboard - World Map](docs/screenshots/dashboard_map.png)
-> Global temperature heatmap with Plotly scatter map — 50 cities across 6 continents.
-
-### KPI Cards & Analytics Charts
-![Dashboard - KPIs](docs/screenshots/dashboard_kpis.png)
-> Real-time KPI cards, temperature radar chart, and humidity bar chart.
-
-### REST API — Auto-generated Docs
-![FastAPI Docs](docs/screenshots/api_docs.png)
-> 8 endpoints with Swagger UI at `/docs`, generated automatically by FastAPI.
-
----
-
 ## Architecture
 
 ```
